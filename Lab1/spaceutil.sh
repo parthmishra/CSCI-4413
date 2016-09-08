@@ -1,9 +1,9 @@
 #!/bin/bash
 
-UTIL=80
-TEST="$(df -h | awk '{if {$5 != "Use%"} print $5}' | cut -d'%' -f1 | head -1)"
+UTIL=10
+TEST="$(df -h | head -2 | tail -1 | awk '{print $5}' | cut -d% -f1)"
 
-if [ $(TEST) -gt $UTIL]
+if [ $TEST -gt $UTIL ]
 then
-	sendmail root@localhost < diskutil.txt
+	echo "Disk Util is over 80%!" | mail -s "Disk Util Alert!" root	
 fi
